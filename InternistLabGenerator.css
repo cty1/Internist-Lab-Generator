@@ -39,14 +39,13 @@ body {
 }
 
 #content {
-    /*text-align: left;
+    text-align: left;
     margin: auto;
     margin-top: -1.3rem;
     width: 80%;
     background-color: rgba(255,255,255);
     overflow: visible;
-    padding-left: 10em;*/
-    margin: 50%;
+    padding-left: 10em;
 }
 
 textarea {
