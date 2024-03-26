@@ -37,7 +37,7 @@ body {
     font-family: calibri, serif;
     background-color: rgba(233, 233, 233);
 }
-/*
+
 #content {
     text-align: left;
     margin: auto;
@@ -47,7 +47,7 @@ body {
     overflow: visible;
     padding-left: 10em;
 }
-*/
+
 textarea {
     padding: 0.4em;
     margin-left: 0;
