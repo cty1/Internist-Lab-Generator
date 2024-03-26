@@ -35,7 +35,8 @@ footer {
 
 body {
     font-family: calibri, serif;
-    background-color: rgba(233, 233, 233);
+    /* gray background. I turned this off for since I thought it was ugly */
+    /*background-color: rgba(233, 233, 233); */
 }
 
 #content {
