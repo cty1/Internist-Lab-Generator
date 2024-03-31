@@ -58,36 +58,16 @@
                 </label>
                 <li id="urineQuestions"></li>
                 <li>
-                    What was the year of the last visit?
-                    <input type="text" id="yearLast" />
-                </li>
-                <li>
-                    What was the total cholesterol last visit?
-                    <input type="text" id="cholLast" />
-                </li>
-                <li>
                     What was the total cholesterol this visit?
                     <input type="text" id="cholThis" />
-                </li>
-                <li>
-                    What was the triglycerides last visit?
-                    <input type="text" id="triLast" />
                 </li>
                 <li>
                     What was the triglycerides this visit?
                     <input type="text" id="triThis" />
                 </li>
                 <li>
-                    What was the HDL last visit?
-                    <input type="text" id="hdlLast" />
-                </li>
-                <li>
                     What was the HDL this visit?
                     <input type="text" id="hdlThis" />
-                </li>
-                <li>
-                    What was the LDL last visit?
-                    <input type="text" id="ldlLast" />
                 </li>
                 <li>
                     What was the LDL this visit?
@@ -125,31 +105,21 @@
                     </label>
                 </li>
                 <li id="cmpQuestions"></li>
-                <li>Was the CRP normal?</li>
                 <li>
-                    <label class="radio">
-                        <input type="radio" name="crpStatus" value="yes" />Yes
-                        <br />
-                        <span class="checkdot"></span>
-                    </label>
-                    <label class="radio">
-                        <input type="radio" name="crpStatus" value="no" />No
-                        <br />
-                        <span class="checkdot"></span>
-                    </label>
-                    <label class="radio">
-                        <input type="radio" name="crpStatus" value="notApplicable" />N/A
-                        <br />
-                        <span class="checkdot"></span>
-                    </label>
+                    What was the iron this visit?
+                    <input type="number" id="iron">
                 </li>
                 <li>
-                    What was the vitamin D?
-                    <input type="number" id="vitD" />
+                    What was the CRP?
+                    <input type="number" id="crpStatus">
                 </li>
                 <li>
                     What was the vitamin B12?
                     <input type="number" id="vitB12" />
+                </li>
+                <li>
+                    What was the vitamin D?
+                    <input type="number" id="vitD" />
                 </li>
                 <li>Did the sedimentation rate show any sign of inflamation?</li>
                 <li>
@@ -215,15 +185,15 @@
         <script>
             // Creates message stating a question hasn't been answered
             function blankNotif(questionNameArray) {
-                var errorMessage = document.getElementById("errorMessages");
+                let errorMessage = document.getElementById("errorMessages");
                 errorMessage.innerHTML = "";
                 if (questionNameArray.length > 0) {
                     errorMessage.append("The questions on the following were left blank and so their respective sentences were omitted from the generated paragraph: ");
                 }
-                var bullets = document.createElement("ul");
-                var bullet = document.createElement("li");
-                var arrayLength = questionNameArray.length;
-                for (var s = 0; s < arrayLength; s++) {
+                let bullets = document.createElement("ul");
+                let bullet = document.createElement("li");
+                let arrayLength = questionNameArray.length;
+                for (let s = 0; s < arrayLength; s++) {
                     bullet = document.createElement("li");
                     bullet.append(questionNameArray[s]);
                     bullets.append(bullet);
@@ -234,15 +204,18 @@
             // Generates the extra HTML Questions when user puts a number into "How many abnormal CBC values were there?" input text.
             function cbcQuestions() {
                 document.getElementById("cbcQuestion").innerHTML = "";
-                var cbcCheckboxData = document.getElementsByName("cbcPart");
-                var cbcNum = document.querySelector('input[name="cbcPart"]').length;
-                for (var k = 0; k < cbcCheckboxData.length; k++) {
+                let cbcCheckboxData = document.getElementsByName("cbcPart");
+                let cbcNum = document.querySelector('input[name="cbcPart"]').length;
+                for (let k = 0; k < cbcCheckboxData.length; k++) {
+                    if (document.getElementById("abval" + k) != null) {
+                        break;
+                    }
                     if (cbcCheckboxData[k].checked) {
-                        var abQuestion = document.createElement("li");
+                        let abQuestion = document.createElement("li");
                         abQuestion.append(document.createTextNode("Describe the CBC of " + cbcCheckboxData[k].value + "  with an adjective. "));
                         document.getElementById("cbcQuestion").appendChild(abQuestion);
-                        var q = document.createElement("li");
-                        var adjCBC = document.createElement("INPUT");
+                        let q = document.createElement("li");
+                        let adjCBC = document.createElement("INPUT");
                         adjCBC.setAttribute("type", "text");
                         adjCBC.setAttribute("id", "abval" + k);
                         q.append(adjCBC);
@@ -254,20 +227,23 @@
 
             // Generates extra HTML Questions when user selects "Abrnormal" for urinanalysis
             function urinalysis() {
-                //var switchBoolean = document.getElementById("urinalysisSwitch").checked;
-                var urineRadio2 = document.getElementsByName("urineStatus");
+                //let switchBoolean = document.getElementById("urinalysisSwitch").checked;
+                let urineRadio2 = document.getElementsByName("urineStatus");
                 if (urineRadio2[1].checked == true) {
+                    if (document.getElementById("redBloodCellHighPower") != null || document.getElementById("whiteBloodCellHighPower") != null) {
+                    return
+                    }
                     console.log("urinalysis");
-                    var question1 = document.createElement("li");
+                    let question1 = document.createElement("li");
                     question1.append(document.createTextNode("What was the count of red blood cells per high powered field? "));
-                    var redBloodCells = document.createElement("INPUT");
+                    let redBloodCells = document.createElement("INPUT");
                     redBloodCells.setAttribute("type", "text");
                     redBloodCells.setAttribute("id", "redBloodCellHighPower");
                     question1.append(redBloodCells);
                     document.getElementById("urineQuestions").appendChild(question1);
-                    var question2 = document.createElement("li");
+                    let question2 = document.createElement("li");
                     question2.append(document.createTextNode("What was the count of white blood cells per high powered field? "));
-                    var whiteBloodCells = document.createElement("INPUT");
+                    let whiteBloodCells = document.createElement("INPUT");
                     whiteBloodCells.setAttribute("type", "text");
                     whiteBloodCells.setAttribute("id", "whiteBloodCellHighPower");
                     question2.append(whiteBloodCells);
@@ -280,11 +256,11 @@
             // Builds a checkbox input. arrayCmpParts is an array with possible choices.
             // Any letters capitalized in elements of arrayCmpParts will be made lowercase in each respective checkbox value.
             function checkboxBuild(checkBoxQuestion, elementId, arrayCmpParts) {
-                var abQuestion = document.createElement("li");
+                let abQuestion = document.createElement("li");
                 abQuestion.append(document.createTextNode(checkBoxQuestion));
-                for (var i = 0; i < arrayCmpParts.length; i++) {
-                    var dividerRadio = document.createElement("div");
-                    var glucoseType = document.createElement("INPUT");
+                for (let i = 0; i < arrayCmpParts.length; i++) {
+                    let dividerRadio = document.createElement("div");
+                    let glucoseType = document.createElement("INPUT");
                     glucoseType.setAttribute("type", "checkbox");
                     glucoseType.setAttribute("name", "cmpPart");
                     glucoseType.setAttribute("value", arrayCmpParts[i].toLowerCase());
@@ -303,50 +279,44 @@
 
             function tshQuestion() {
                 document.getElementById("tshPopup").innerHTML = "";
-                var question1 = document.createElement("li");
+                let question1 = document.createElement("li");
                 question1.append(document.createTextNode("What was the TSH level? "));
-                var redBloodCells = document.createElement("INPUT");
+                let redBloodCells = document.createElement("INPUT");
                 redBloodCells.setAttribute("type", "number");
                 redBloodCells.setAttribute("id", "tshLevel");
                 question1.append(redBloodCells);
                 document.getElementById("tshPopup").appendChild(question1);
             }
 
-            var paragraphDiv;
-            var height;
-            var weight;
-            var pressure;
-            var pulse;
-            var temperature;
-            var valCBC;
-            var i = 0;
-            var num = 0;
-            var o = 0;
-            var acmp;
-            var cholLast;
-            var cholThis;
-            var ldlLast;
-            var ldlThis;
-            var hdlLast;
-            var hdlThis;
-            var triLast;
-            var triThis;
-            var abCMP;
-            var crpNorm;
-            var vitD;
-            var vitB12;
-            var tsh;
-            var sedInf;
-            var hemoA1C;
-            var ecg;
-            var monthLast;
-            var yearLast;
-            var triThis;
+            let paragraphDiv;
+            let height;
+            let weight;
+            let pressure;
+            let pulse;
+            let temperature;
+            let valCBC;
+            let i = 0;
+            let num = 0;
+            let o = 0;
+            let acmp;
+            let cholThis;
+            let ldlThis;
+            let hdlThis;
+            let triThis;
+            let abCMP;
+            let iron;
+            let crpNorm;
+            let vitD;
+            let vitB12;
+            let tsh;
+            let sedInf;
+            let hemoA1C;
+            let ecg;
 
             // Creates the paragraph in the text area
             function createParagraph() {
-                var questionNames = [];
-                var para = "";
+                let questionNames = [];
+                let para = "";
                 document.getElementById("paragraph").innerHTML = "";
                 paragraphDiv = document.getElementById("paragraph");
                 paragraphDiv.innerHTML = "";
@@ -355,22 +325,18 @@
                 pulse = document.getElementById("pulse").value;
                 temperature = document.getElementById("temperature").value;
                 valCBC = "";
-                var w;
+                let w;
                 acmp = 0;
-                cholLast = document.getElementById("cholLast").value.toString();
                 cholThis = document.getElementById("cholThis").value.toString();
-                ldlLast = document.getElementById("ldlLast").value.toString();
                 ldlThis = document.getElementById("ldlThis").value.toString();
-                hdlLast = document.getElementById("hdlLast").value.toString();
                 hdlThis = document.getElementById("hdlThis").value.toString();
-                triLast = document.getElementById("triLast").value.toString();
                 triThis = document.getElementById("triThis").value.toString();
                 hemoA1C = document.getElementById("hemoA1C").value.toString();
-                yearLast = document.getElementById("yearLast").value;
                 triThis = document.getElementById("triThis").value.toString();
+                iron = document.getElementById("iron").value;
 
-                var heightFtData = document.getElementById("heightFt").value;
-                var heightInData = document.getElementById("heightIn").value;
+                let heightFtData = document.getElementById("heightFt").value;
+                let heightInData = document.getElementById("heightIn").value;
                 if (heightFtData && heightInData) {
                     para += "On physical examination your height was " + heightFtData + " feet " + heightInData + " inches";
                 } else if (heightFtData) {
@@ -390,32 +356,32 @@
                 }
 
                 if (!weight) {
-                    questionNames.push("weight");
+                    questionNames.push("Weight");
                 }
                 if (!pressure) {
-                    questionNames.push("pressure");
+                    questionNames.push("Pressure");
                 }
                 if (!pulse) {
-                    questionNames.push("pulse");
+                    questionNames.push("Pulse");
                 }
                 if (!temperature) {
-                    questionNames.push("temperature");
+                    questionNames.push("Temperature");
                 }
 
                 if (weight || heightFtData) {
                     para += "The remainder of your examination was great.  \n\n";
                 }
 
-                para += "We reviewed your laboratory testing in the office, and I gave you copies.  ";
+                para += "We reviewed your laboratory testing in the office, and I gave you copies. ";
 
                 // CBC
-                var cbcTypeRadio = document.getElementsByName("cbcPart");
-                var numCBC = document.querySelectorAll('input[name="cbcPart"]:checked').length;
+                let cbcTypeRadio = document.getElementsByName("cbcPart");
+                let numCBC = document.querySelectorAll('input[name="cbcPart"]:checked').length;
                 if (numCBC > 0) {
                     para += "The CBC, or complete blood count which looks at the white blood cells, the red blood cells, and platelets, or clotting cells, was all normal except for the ";
-                    var descriptCBC = {};
-                    var countCBCCheck = 0;
-                    for (var k = 0; k < cbcTypeRadio.length; k++) {
+                    let descriptCBC = {};
+                    let countCBCCheck = 0;
+                    for (let k = 0; k < cbcTypeRadio.length; k++) {
                         if (cbcTypeRadio[k].checked) {
                             descriptCBC[k] = document.getElementById("abval" + k).value;
                             if (descriptCBC[k]) {
@@ -435,31 +401,31 @@
                         }
                     }
                 } else if (numCBC == 0) {
-                    para += "The CBC, or complete blood count which looks at the white blood cells, the red blood cells, and platelets, or clotting cells, was all normal.  ";
+                    para += "The CBC, or complete blood count which looks at the white blood cells, the red blood cells, and platelets, or clotting cells, was all normal. ";
                 }
 
                 // Urinalysis and High Powered Fields
-                var paraUrine = "";
-                var urineRadio = document.getElementsByName("urineStatus");
-                var urineButtonCount = 0;
-                for (var k = 0; k < urineRadio.length; k++) {
+                let paraUrine = "";
+                let urineRadio = document.getElementsByName("urineStatus");
+                let urineButtonCount = 0;
+                for (let k = 0; k < urineRadio.length; k++) {
                     if (urineRadio[k].checked == true) {
                         urineButtonCount += 1;
                         if (urineRadio[k].value == "yes") {
                             paraUrine += "The urinalysis looked normal.  \n\n";
                         } else if (urineRadio[k].value == "no") {
-                            var highPowerRed = document.getElementById("redBloodCellHighPower").value;
-                            var highPowerWhite = document.getElementById("whiteBloodCellHighPower").value;
-                            var highPowerAnswered = 0;
+                            let highPowerRed = document.getElementById("redBloodCellHighPower").value;
+                            let highPowerWhite = document.getElementById("whiteBloodCellHighPower").value;
+                            let highPowerAnswered = 0;
                             if (highPowerRed) {
                                 highPowerAnswered += 1;
                             } else {
-                                questionNames.push("red blood cells per high powered field");
+                                questionNames.push("Red Blood Cells per high powered field");
                             }
                             if (highPowerWhite) {
                                 highPowerAnswered += 1;
                             } else {
-                                questionNames.push("white blood cells per high powered field");
+                                questionNames.push("White Blood Cells per high powered field");
                             }
                             if (highPowerAnswered == 2) {
                                 paraUrine += "The urine showed " + highPowerRed + " red blood cells per high powered field and " + highPowerWhite + " white blood cells per high powered field.  \n\n";
@@ -478,129 +444,66 @@
                 }
 
                 //Cholesterol
-                if (yearLast) {
-                    var cholAnswerCount = 0;
-                    if (cholThis) {
-                        cholAnswerCount += 1;
-                    } else {
-                        questionNames.push("total cholesterol this visit");
-                    }
-
-                    if (cholLast) {
-                        cholAnswerCount += 1;
-                    } else {
-                        questionNames.push("total cholesterol last visit");
-                    }
-
-                    if (cholAnswerCount == 2) {
-                        para += "The total cholesterol returned at " + cholThis;
-                        if (cholThis < cholLast) {
-                            para += ", down from " + cholLast + " in " + yearLast;
-                        } else if (cholThis > cholLast) {
-                            para += ", up from " + cholLast + " in " + yearLast;
-                        } else {
-                            para += ", exactly the same as in " + yearLast;
-                        }
-                    }
-
-                    var ldlAnswerCount = 0;
-                    if (ldlThis) {
-                        ldlAnswerCount++;
-                    } else {
-                        questionNames.push("LDL this visit");
-                        // Add a period if cholesterol last visit question answered and LDL last visit or LDL this visit questions not filled out.
-                    }
-
-                    if (ldlLast) {
-                        ldlAnswerCount++;
-                    } else {
-                        questionNames.push("LDL last visit");
-                    }
-
-                    if (ldlAnswerCount == 2) {
-                        if (cholAnswerCount == 2) {
-                            para += ", with an LDL, or bad cholesterol of " + ldlThis;
-                        } else {
-                            para += "Your LDL, also known as bad cholesterol, was " + ldlThis;
-                        }
-                        if (ldlThis < ldlLast) {
-                            para += ", down from " + ldlLast + " in " + yearLast + ".  ";
-                        } else if (ldlThis > ldlLast) {
-                            para += ", up from " + ldlLast + " in " + yearLast + ".  ";
-                        } else {
-                            para += ", exactly the same as in " + yearLast + ".  ";
-                        }
-                    } else if (cholAnswerCount == 2) {
-                        para += ".  ";
-                    }
-
-                    var hdlAnswerCount = 0;
-                    if (hdlThis) {
-                        hdlAnswerCount++;
-                    } else {
-                        questionNames.push("HDL this visit");
-                    }
-
-                    if (hdlLast) {
-                        hdlAnswerCount++;
-                    } else {
-                        questionNames.push("HDL Last visit");
-                    }
-
-                    if (hdlAnswerCount == 2) {
-                        para += "The HDL, or good cholesterol was " + hdlThis;
-                        if (hdlThis < hdlLast) {
-                            para += ", down from " + hdlLast + " in " + yearLast;
-                        } else if (hdlThis > hdlLast) {
-                            para += ", up from " + hdlLast + " in " + yearLast;
-                        } else {
-                            para += ", exactly the same as in " + yearLast;
-                        }
-                    }
-
-                    var triAnswerCount = 0;
-                    if (triThis) {
-                        triAnswerCount++;
-                    } else {
-                        questionNames.push("triglycerides this visit");
-                    }
-
-                    if (triLast) {
-                        triAnswerCount++;
-                    } else {
-                        questionNames.push("triglycerides last visit");
-                    }
-
-                    if (triAnswerCount == 2) {
-                        if (hdlAnswerCount == 2) {
-                            para += " and triglycerides were " + triThis;
-                        } else {
-                            para += "Triglycerides were " + triThis;
-                        }
-                        if (triThis < triLast) {
-                            para += ", down from " + triLast + " in " + yearLast;
-                        } else if (triThis > triLast) {
-                            para += ", up from " + triLast + " in " + yearLast;
-                        } else {
-                            para += ", exactly the same as in " + yearLast;
-                        }
-                        para += ".  Ideally, the cholesterol should be below 200, LDL below 100, HDL above 60 and triglycerides below 100.  ";
-                    } else if (hdlAnswerCount == 2) {
-                        para += ".  ";
-                    }
+                if (cholThis) {
+                    para += "The total cholesterol returned at " + cholThis;
                 } else {
-                    questionNames.push("year of the last visit");
+                    questionNames.push("Total Cholesterol this Visit");
+                }
+                let ldlAnswerCount = 0;
+                if (ldlThis) {
+                    ldlAnswerCount++;
+                } else {
+                    questionNames.push("LDL this Visit");
+                    // Add a period if cholesterol last visit question answered and LDL last visit or LDL this visit questions not filled out.
+                    if (cholThis && (!ldlThis)) {
+                        para += ". "
+                    }
+                }
+
+                if (ldlAnswerCount == 1) {
+                    para += ", with an LDL, or bad cholesterol of " + ldlThis + ". ";
+                } else {
+                    para += ". ";
+                }
+
+                let hdlAnswerCount = 0;
+                if (hdlThis) {
+                    hdlAnswerCount++;
+                } else {
+                    questionNames.push("HDL this visit");
+                }
+
+                if (hdlAnswerCount == 1) {
+                    para += "The HDL, or good cholesterol was " + hdlThis;
+                }
+
+                let triAnswerCount = 0;
+                if (triThis) {
+                    triAnswerCount++;
+                } else {
+                    questionNames.push("triglycerides this visit");
+                }
+
+                if (triAnswerCount == 1) {
+                    if (hdlAnswerCount == 1) {
+                        para += " and triglycerides were " + triThis;
+                    } else {
+                        para += "Triglycerides were " + triThis;
+                    }
+                    para += ".  Ideally, the cholesterol should be below 200, LDL below 100, HDL above 60 and triglycerides below 100. ";
+                } else {
+                    para += ". ";
                 }
                 para += "I calculated the 10-year risk of heart attack and stroke based on the American Heart Association (AHA) guidelines, and your risk returned at *.  \n\n";
 
                 // Abnormal results a part of the CMP
                 para += "The comprehensive metabolic profile, which looks at glucose, sodium, potassium, electrolytes, kidney function, calcium, proteins and liver function tests, was all normal";
-                var cmpTypes = document.getElementsByName("cmpPart");
-                var cmpNum = document.querySelectorAll('input[name="cmpPart"]:checked').length;
-                var numChecked = 0; //Counts the number of CMP options checked
+                let cmpTypes = document.getElementsByName("cmpPart");
+                let cmpNum = document.querySelectorAll('input[name="cmpPart"]:checked').length;
+                let numChecked = 0; //Counts the number of CMP options checked
                 //console.log("cmpTypes.length= " + cmpTypes.length);
                 //console.log("cmpNum= " + cmpNum);
-                for (var s = 0; s < cmpTypes.length; s++) {
+                for (let s = 0; s < cmpTypes.length; s++) {
                     //console.log("numChecked= "+ numChecked + ", cmpNum-s= "+ (cmpNum-s).toString() + ", cmpTypes[s].value =" + cmpTypes[s].value);
                     if (cmpTypes[s].checked) {
                         if (numChecked == 0) {
@@ -615,36 +518,42 @@
                         numChecked++;
                     }
                 }
-                para += ".  ";
+                para += ". ";
 
-                // CRP
-                var paraCRP = "The CRP, or high sensitivity marker of inflammation in the body, which is also seen as a risk factor for heart disease, was ";
-                var crpRadio = document.getElementsByName("crpStatus");
-                var crpButtonCount = 0;
-                for (var k = 0; k < crpRadio.length; k++) {
-                    if (crpRadio[k].checked == true) {
-                        crpButtonCount += 1;
-                        if (crpRadio[k].value == "yes") {
-                            paraCRP += "normal.  ";
-                        } else if (crpRadio[k].value == "no") {
-                            paraCRP += "not normal.  ";
-                        } else if (crpRadio[k].value == "notApplicable") {
-                            paraCRP = "";
-                        }
+                // Iron
+                if (iron) {
+                    para += "The iron level was " + iron;
+                    if (iron < 50) {
+                        para += ", which is low";
+                    }else if (iron > 190) {
+                        para += ", which is high";
+                    }else {
+                        para += ", which is normal";
                     }
+                    para += ". ";
+                }else {
+                    questionNames.push("Iron")
                 }
 
-                if (crpButtonCount != 0) {
+                // CRP
+                let paraCRP = "The CRP, or high sensitivity marker of inflammation in the body was ";
+                let crpResponse = document.getElementsByName("crpStatus");
+                if (crpResponse.value != null) {
+                    if (crpRadio.value <= 10) {
+                        paraCRP += "normal. ";
+                    } else if (crpRadio.value > 10) {
+                        paraCRP += "high. ";
+                    }
                     para += paraCRP;
                 } else {
                     questionNames.push("CRP");
                 }
 
                 // Sedimentation rate
-                var paraSed = "The sedimentation rate, another marker of inflammation, was ";
-                var sedRadio = document.getElementsByName("sedStatus");
-                var sedButtonCount = 0;
-                for (var k = 0; k < sedRadio.length; k++) {
+                let paraSed = "The sedimentation rate, another marker of inflammation, was ";
+                let sedRadio = document.getElementsByName("sedStatus");
+                let sedButtonCount = 0;
+                for (let k = 0; k < sedRadio.length; k++) {
                     if (sedRadio[k].checked == true) {
                         sedButtonCount += 1;
                         if (sedRadio[k].value == "yes") {
@@ -664,17 +573,17 @@
                 }
 
                 // TSH
-                var paraTsh = "The TSH (thyroid function) was ";
-                var tshRadio = document.getElementsByName("tshStatus");
-                var tshButtonCount = 0;
-                for (var k = 0; k < tshRadio.length; k++) {
+                let paraTsh = "The TSH (thyroid function) was ";
+                let tshRadio = document.getElementsByName("tshStatus");
+                let tshButtonCount = 0;
+                for (let k = 0; k < tshRadio.length; k++) {
                     if (tshRadio[k].checked == true) {
                         tshButtonCount += 1;
                         if (tshRadio[k].value == "normal") {
-                            paraTsh += tshRadio[k].value + ".  ";
+                            paraTsh += tshRadio[k].value + ". ";
                         } else if (tshRadio[k].value == "elevated" || tshRadio[k].value == "suppressed") {
-                            var tshLevelNum = document.getElementById("tshLevel").value;
-                            paraTsh += tshRadio[k].value + " at " + tshLevelNum + ".  ";
+                            let tshLevelNum = document.getElementById("tshLevel").value;
+                            paraTsh += tshRadio[k].value + " at " + tshLevelNum + ". ";
                         } else {
                             console.log("Error in TSH Radio buttons. ");
                         }
@@ -691,11 +600,11 @@
                 vitD = document.getElementById("vitD").value.toString();
 
                 if (vitD < 30 && vitD != "") {
-                    para += "The Vitamin D level was low at " + vitD + ".  ";
-                    para += "It should really be above 30, so I would recommend you take Vitamin D3 1000 mcg once a day.  ";
-                    para += "We can recheck the Vitamin D level next year.  ";
+                    para += "The Vitamin D level was low at " + vitD + ". ";
+                    para += "It should really be above 30, so I would recommend you take Vitamin D3 1000 mcg once a day. ";
+                    para += "We can recheck the Vitamin D level next year. ";
                 } else if (vitD >= 30) {
-                    para += "The Vitamin D level was normal at " + vitD + ".  ";
+                    para += "The Vitamin D level was normal at " + vitD + ". ";
                 } else {
                     questionNames.push("Vitamin D");
                 }
@@ -704,7 +613,7 @@
                 vitB12 = document.getElementById("vitB12").value.toString();
                 if (vitB12 < 400 && vitB12 != "") {
                     para += "The Vitamin B12 level was low at " + vitB12 + ".  ";
-                    para += "It should really be above 400, so I would recommend taking Vitamin B12 500 mcg daily to boost the level.  ";
+                    para += "It should really be above 400, so I would recommend taking Vitamin B12 500 mcg daily to boost the level. ";
                 } else if (vitB12 >= 400) {
                     para += "The Vitamin B12 level was normal at " + vitB12 + ".  ";
                 } else {
@@ -728,14 +637,14 @@
                 }
 
                 // ECG
-                var ecg = document.getElementById("ecgSwitch");
-                var ecgRateNum = document.getElementById("ecgRate").value;
+                let ecg = document.getElementById("ecgSwitch");
+                let ecgRateNum = document.getElementById("ecgRate").value;
                 if (ecgRateNum) {
                     para += "The ECG shows a ";
                     if (ecg.checked) {
-                        para += "normal sinus rhythm at a rate of " + ecgRateNum + ".";
+                        para += "normal sinus rhythm at a rate of " + ecgRateNum + ". ";
                     } else {
-                        para += "abnormal sinus rhythm at a rate of " + ecgRateNum + ".  ";
+                        para += "abnormal sinus rhythm at a rate of " + ecgRateNum + ". ";
                     }
                 } else {
                     questionNames.push("ECG rate");

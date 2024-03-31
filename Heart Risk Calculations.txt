@@ -1,0 +1,3 @@
+Risk_Factors =  (ln(Age) * 3.06117) + (ln(Total_cholesterol) * 1.12370) - (ln(HDL_cholesterol) * 0.93263) +  (ln(Systolic_blood_pressure) * On_blood_pressure_medication) + Cigarette_smoker + Diabetes_present - 23.9802;
+
+Risk =  100 * (1 - power(0.88936, eTo(Risk_Factors)));
