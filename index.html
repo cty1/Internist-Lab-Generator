@@ -12,6 +12,10 @@
         </header>
         <div id="content">
             <ul id="inputs">
+                <li>
+                    Patient Age:
+                    <input type="number" id="age">
+                </li>
                 <li>Patient Height:</li>
                 <li><input type="number" id="heightFt" />Feet <input type="number" id="heightIn" />Inches</li>
                 <li>Patient Weight: <input type="number" id="weight" />lbs</li>
@@ -537,11 +541,11 @@
 
                 // CRP
                 let paraCRP = "The CRP, or high sensitivity marker of inflammation in the body was ";
-                let crpResponse = document.getElementsByName("crpStatus");
-                if (crpResponse.value != null) {
-                    if (crpRadio.value <= 10) {
+                let crpResponse = document.getElementById("crpStatus");
+                if (crpResponse.value != undefined) {
+                    if (crpResponse.value <= 10) {
                         paraCRP += "normal. ";
-                    } else if (crpRadio.value > 10) {
+                    } else if (crpResponse.value > 10) {
                         paraCRP += "high. ";
                     }
                     para += paraCRP;
